@@ -1,6 +1,7 @@
+import dotenv from 'dotenv';
+
 export interface AirtableConfig {
     route: string;
-    base: string;
     table: string;
     view?: string;
     filter?: string;
@@ -10,34 +11,80 @@ export interface AirtableConfig {
 
 export const airtableConfigs: Array<AirtableConfig> = [
     {
-        route: "posts",
-        base: "app123456",
-        table: "Table Name",
-        filter: "Status = 'Published'",
+        route: "books",
+        table: "Book",
         fields: [
-            'ID',
-            'First Name',
-            'Last Name',
-            'Content',
+            'id',
+            'title',
+            'author',
+            'author_name',
+            'illustrator',
+            'illustrator_name',
+            'publisher',
+            'date_published',
+            'date_added',
+            'identity_description',
+            'description',
+            'image',
+            'age_min',
+            'age_max',
+            'grade_min',
+            'grade_max',
+            'race/ethnicity',
+            'religion',
+            'identity_tags',
+            'theme/lessons',
+            'genre',
+            'book_type',
+            'bookshop_link',
+            'read_aloud_link',
+            'educator_guide_link',
+            'collections',
         ],
-        fieldMappings: ((records: any[]) => {
-            return records.map( (record: any) => {
-                return {
-                    id: record.ID,
-                    name: `${record['First Name']} ${record['Last Name']}`,
-                    content: record.Content,
-                }
-            })
-        }),
     },
     {
-        route: "settings",
-        base: "app123456",
-        table: "Table Name",
-        filter: "Status = 'Published'",
+        route: "collections",
+        table: "Collection",
         fields: [
-            "Key",
-            "Value",
+            'name',
+            'description',
+            'image',
+            'books',
+            'links',
+            'featured',
+        ],
+    },
+    {
+        route: "dictionary",
+        table: "Definition",
+        fields: [
+            'word',
+            'definition',
+            'links',
+            'phonetic_spelling',
+        ],
+    },
+    {
+        route: "metadata",
+        table: "Book Tag Metadata",
+        fields: [
+            'id',
+            'name',
+            'options',
+            'display',
+        ],
+    },
+        {
+        route: "creator",
+        table: "Creator",
+        fields: [
+            'id',
+            'name',
+            'bio',
+            'authored',
+            'illustrated',
+            'personal_site',
+            'image',
         ],
     },
 ];

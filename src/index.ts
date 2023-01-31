@@ -25,9 +25,21 @@ app.get('/health', (req: Request, res: Response) => res.send("ok"));
 
 for (const config of airtableConfigs) {
   const airtable = new AirtableService(config);
+
+  // fetch whole table
   app.get(`/${config.route}`, async (req: Request, res: Response) => {
     try {
       const r = await airtable.getCachedTableContent();
+      return res.send(r);
+    } catch(e) {
+      return res.status(500).send(e);
+    }
+  });
+
+  // find individual record
+  app.get(`/${config.route}/:id`, async (req: Request, res: Response) => {
+    try {
+      const r = await airtable.getCachedRecord(req.params.id);
       return res.send(r);
     } catch(e) {
       return res.status(500).send(e);

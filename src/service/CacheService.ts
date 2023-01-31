@@ -1,4 +1,4 @@
-const CACHE_TTL = 1000 * 60;    // 1 minute
+const CACHE_TTL = 1000 * 300;    // 5 minutes
 
 export default class CacheService {
 
