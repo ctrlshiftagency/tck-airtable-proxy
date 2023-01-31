@@ -30,24 +30,14 @@ export default class AirtableService {
         }
 
         const records = await this.table.select(opts).all();
+
         const mappedRecords = records.map(record => {
             return {
-                ...record.fields,
-                "Airtable ID": record.id,
+                fields: {...record.fields},
+                id: record.id,
             };
-        }).map(record => {
-            const parsedRecords: any = {
-                "Airtable ID": record["Airtable ID"],
-            };
-            for (const field of this.config.fields.sort()) {
-                parsedRecords[field] = record[field] ?? null;            
-            }
-            return parsedRecords;
-        });
+        })
 
-        if (this.config.fieldMappings) {
-            return this.config.fieldMappings();
-        }
         return mappedRecords;
     }
 
@@ -56,7 +46,7 @@ export default class AirtableService {
             console.log(`[cache]: Cache is empty, fetching`, `${new Date()}`);
             const records = await this.getTableContent();
             this.cache.set(records);
-            const record = records.find((el: any) => {el['Airtable ID'] === id});
+            const record = records.find((el: any) => {el.id=== id});
             return record;
         }
         if (this.cache.expired()) {
@@ -66,7 +56,7 @@ export default class AirtableService {
                 console.log(`[cache]: Cache updated`, `${new Date()}`);
             });
         }
-        return this.cache.get().find((el: any) => { return el['Airtable ID'] === id});
+        return this.cache.get().find((el: any) => { return el.id === id});
     }
 
     public async getCachedTableContent() {

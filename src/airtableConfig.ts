@@ -6,7 +6,6 @@ export interface AirtableConfig {
     view?: string;
     filter?: string;
     fields: string[];
-    fieldMappings?: Function;
 }
 
 export const airtableConfigs: Array<AirtableConfig> = [
